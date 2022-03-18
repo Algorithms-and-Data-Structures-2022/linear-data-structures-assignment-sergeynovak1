@@ -11,49 +11,63 @@ namespace assignment {
     if (capacity <= 0) {
       throw std::invalid_argument("capacity is not positive");
     }
+    capacity_ = capacity;
 
-    // Write your code here ...
+    data_ = new int[capacity_];
+
+    std::fill(data_, data_ + capacity_, 0);
   }
 
   ArrayStack::~ArrayStack() {
-    // Write your code here ...
+    size_ = 0;
+    capacity_ = 0;
+    data_ = nullptr;
   }
 
   void ArrayStack::Push(int value) {
-    // Write your code here ...
+    if (capacity_ < size_ + 1) {
+      capacity_ += kCapacityGrowthCoefficient;
+    }
+    data_[size_] = value;
+    size_ += 1;
   }
 
   bool ArrayStack::Pop() {
-    // Write your code here ...
+    if (size_ > 0) {
+      size_ -= 1;
+      return true;
+    }
     return false;
   }
 
   void ArrayStack::Clear() {
-    // Write your code here ...
+    size_ = 0;
   }
 
   std::optional<int> ArrayStack::Peek() const {
-    // Write your code here ...
+    if (size_ > 0) {
+      return data_[size_ - 1];
+    }
     return std::nullopt;
   }
 
   bool ArrayStack::IsEmpty() const {
-    // Write your code here ...
-    return false;
+    return size_ == 0;
   }
 
   int ArrayStack::size() const {
-    // Write your code here ...
-    return 0;
+    return  size_;
   }
 
   int ArrayStack::capacity() const {
-    // Write your code here ...
-    return 0;
+    return  capacity_;
   }
 
   bool ArrayStack::Resize(int new_capacity) {
-    // Write your code here ...
+    if (new_capacity > capacity_) {
+      capacity_ = new_capacity;
+      return true;
+    }
     return false;
   }
 
